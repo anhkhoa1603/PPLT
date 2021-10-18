@@ -20,10 +20,14 @@ void checkTamGiac(float a, float b, float c)
 }
 int main()
 {
-    printf("nhap 3 canh cua tam giac: ");
+    printf_s("nhap 3 canh cua tam giac: ");
+
     float a, b, c;
     scanf("%f%f%f", &a, &b, &c);
+
     printf("Dien tich tam giac = %.2f\n", congThucHeron(a, b, c));
+
     checkTamGiac(a, b, c);
+    
     return 0;
 }
