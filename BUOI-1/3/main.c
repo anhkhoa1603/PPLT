@@ -10,17 +10,13 @@ float congThucHeron(float a, float b, float c)
 void checkTamGiac(float a, float b, float c)
 {
     if (a + b > c && a + c > b && b + c > a)
-    {
         printf("La 1 tam giac hop le");
-    }
     else
-    {
         printf("Khong phai 1 tam giac hop le");
-    }
 }
 int main()
 {
-    printf_s("nhap 3 canh cua tam giac: ");
+    printf("nhap 3 canh cua tam giac: \n");
 
     float a, b, c;
     scanf("%f%f%f", &a, &b, &c);
