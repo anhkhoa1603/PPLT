@@ -2,7 +2,7 @@
 
 int main()
 {
-    float Toan, Li, Hoa, Sinh, Tin, Tong;
+    float Toan, Li, Hoa, Sinh, Tin, Tb;
     printf("Vui long nhap diem cua tung mon\n");
     printf("Toan: ");
     scanf("%f", &Toan);
@@ -15,25 +15,25 @@ int main()
     printf("Tin: ");
     scanf("%f", &Tin);
 
-    Tong = Toan + Li + Hoa + Sinh + Tin;
+    Tb = (Toan + Li + Hoa + Sinh + Tin) / 5.0;
 
-    if (Tong > 45)
+    if (Tb > 9)
     {
         printf("Phan loai: Lop A");
     }
-    else if (Tong > 40)
+    else if (Tb > 8)
     {
         printf("Phan loai: Lop B");
     }
-    else if (Tong > 35)
+    else if (Tb > 7)
     {
         printf("Phan loai: Lop C");
     }
-    else if (Tong > 30)
+    else if (Tb > 6)
     {
         printf("Phan loai: Lop D");
     }
-    else if (Tong > 20)
+    else if (Tb > 4)
     {
         printf("Phan loai: Lop E");
     }
