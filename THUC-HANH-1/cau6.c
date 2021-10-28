@@ -6,8 +6,15 @@ int main()
     int a;
     printf("Nhap so a: ");
     scanf("%d", &a);
-    
-    printf("Gia tri tuyet doi cua a = %d", abs(a));
-    
+
+    if (a > 0)
+    {
+        printf("Gia tri tuyet doi cua %d = %d", a, a);
+    }
+    else
+    {
+        printf("Gia tri tuyet doi cua %d = %d", a, 0 - a);
+    }
+
     return 0;
 }
