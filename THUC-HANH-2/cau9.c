@@ -20,4 +20,6 @@ int main()
     
     int m = (x * dem * 10) + cong + n;
     printf("So sau khi doi 2 vi tri: %d", m);
+
+    return 0;
 }

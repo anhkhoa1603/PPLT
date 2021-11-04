@@ -16,4 +16,6 @@ int main()
     }
 
     printf("So sau khi doi vi tri: %d", cong);
+
+    return 0;
 }
