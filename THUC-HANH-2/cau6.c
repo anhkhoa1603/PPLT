@@ -7,12 +7,16 @@ int main()
     scanf("%d", &n);
 
     int x = n % 10;
+    int sum = x;
+
     while (n > 10)
     {
         n = n / 10;
+        x = n % 10;
+        sum = sum + x;
     }
     
-    printf("So dau va so cuoi cua N lan luot la %d va %d", n, x);
+    printf("Tong cac so = %d", sum);
     
     return 0;
 }
