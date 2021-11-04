@@ -8,6 +8,7 @@ int main()
     {
         printf("Nhap n: ");
         scanf("%d", &n);
+        if (n <= 0) printf("Khong hop le, moi nhap lai!\n");
     } while (n <= 0);
     /*
     while (i <= n)

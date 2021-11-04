@@ -2,29 +2,22 @@
 
 int main()
 {
-    int n, sum, i = 2;
-    
+    int n;
     do
     {
         printf("Nhap n: ");
         scanf("%d", &n);
         if (n <= 0) printf("Khong hop le, moi nhap lai!\n");
     } while (n <= 0);
-    /*
-    while (i <= n)
-    {
-        sum = sum + i;
-        i += 2;
-    }
-    */
-    
-    for (i = 2 ; i <= n ; i += 2)
-    {
-        sum = sum + i;
-    }
-    
-    
-    printf("Ket qua = %d", sum);
 
+    if (n % 1 != 0 || n % n != 0)
+    {
+        printf("Day khong phai so nguyen to!");
+    }
+    else
+    {
+        printf("Day la so nguyen to!");
+    }
+    
     return 0;
 }
