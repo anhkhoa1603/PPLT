@@ -23,7 +23,7 @@ int main()
     }
     
     
-    printf("Ket qua = : %d", sum);
+    printf("Ket qua = %d", sum);
 
     return 0;
 }

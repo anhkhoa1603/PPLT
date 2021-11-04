@@ -13,11 +13,11 @@ int main()
     while (i <= n)
     {
         sum = sum + i;
-        i += 2;
+        i++;
     }
     */
     
-    for (i = 1 ; i <= n ; i += 2)
+    for (i = 1 ; i <= n ; i++)
     {
         sum = sum + i;
     }
