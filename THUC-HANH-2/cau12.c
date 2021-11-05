@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 int main()
 {
@@ -10,14 +11,16 @@ int main()
         if (n <= 0) printf("Khong hop le, moi nhap lai!\n");
     } while (n <= 0);
 
-    if (n % 1 != 0 || n % n != 0)
+    int count = 0;
+    for (int i = 2; i <= sqrt(n); i++)
     {
-        printf("Day khong phai so nguyen to!");
+        if (n % i == 0)
+            count++;
     }
+    if (count == 0)
+        printf("Day la so nguyen to!!");
     else
-    {
-        printf("Day la so nguyen to!");
-    }
-    
+        printf("Day khong phai so nguyen to!!");
+
     return 0;
 }

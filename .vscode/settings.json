@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "MAIN.C": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": true
 }
