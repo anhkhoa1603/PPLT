@@ -1,18 +1,5 @@
 #include <stdio.h>
-
-int reverse(int n)
-{
-    int cong = 0, x;
-
-    while (n > 0)
-    {
-        x = n % 10;
-        n = n / 10;
-        cong = cong * 10 + x;
-    }
-
-    return cong;
-}
+#include <math.h>
 
 int main()
 {
@@ -20,19 +7,17 @@ int main()
     printf("Nhap N: ");
     scanf("%d", &n);
 
-    int m = 10;
+    int x = 0;
     int cong = 0;
-    int i, x;
+
     while (n > 0)
     {
-        i = n % 2;
-        n /= 2;
-        x = i * m;
-        cong += x;
-        m = m * 10;
+        cong = cong + (n % 2) * pow(10, x);
+        ++x;
+        n = n / 2;
     }
 
-    printf("%d", reverse(cong));
+    printf("%d", cong);
 
     return 0;
 }

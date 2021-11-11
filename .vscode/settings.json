@@ -3,5 +3,6 @@
         "MAIN.C": "cpp",
         "1.C": "cpp"
     },
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "C_Cpp.errorSquiggles": "Disabled"
 }
