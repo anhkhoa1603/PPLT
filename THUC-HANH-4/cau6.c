@@ -1,11 +1,11 @@
 #include <stdio.h>
 
-int tongAm(int a[], int n)
+int tongChan(int a[], int n)
 {
     int  sum = 0;
     for (int i = 0; i < n; i++)
     {
-        if (a[i] < 0)
+        if (a[i] % 2 == 0)
         {
             sum += a[i];
         }
@@ -34,7 +34,7 @@ int main()
     
     nhapMang(a, &n);
 
-    int sum = tongAm(a, n);
+    int sum = tongChan(a, n);
     printf("Max = %d", sum);
 
     return 0;
