@@ -1,8 +1,6 @@
 {
     "files.associations": {
-        "MAIN.C": "cpp",
-        "1.C": "cpp"
-    },
-    "cmake.configureOnOpen": true,
-    "C_Cpp.errorSquiggles": "Disabled"
+        "*.c": "c",
+        "*.cpp": "cpp"
+    }
 }
