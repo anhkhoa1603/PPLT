@@ -1,9 +1,8 @@
 #include <stdio.h>
 
-const int max = 1e4;
-
 int main()
 {
+    const int max = 1e4;
     int n;
 
     printf("Nhap so luong phan tu: ");
