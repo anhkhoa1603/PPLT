@@ -2,8 +2,8 @@
 
 int main()
 {
-    const int max = 1e4;
-    int n;
+    const int max = 1000;
+    int n, dem = 0;
 
     printf("Nhap so luong phan tu: ");
     scanf("%d", &n);
@@ -27,8 +27,12 @@ int main()
     }
     
     for (int i = 0; i < max; i++)
-        if (count[i] > 0)
-            printf("Gia tri %d xuat hien %d lan\n", i, count[i]);
-    
+    {
+        if (count[i] > 1)
+            dem++;
+    }
+
+    printf("So cac so trung nhau la %d", dem);
+
     return 0;
 }
