@@ -3,8 +3,17 @@
 int main()
 {
     float d;
-    printf("Quang duong di duoc: ");
-    scanf("%f", &d);
+    do
+    {
+        printf("Quang duong di duoc: ");
+        scanf("%f", &d);
+        if (d<= 0)
+        {
+            printf("Du lieu khong hop le, moi nhap lai: ");
+            scanf("%f", &d);
+        }
+        
+    }while(d <= 0);
 
     float pay = 0;
 
