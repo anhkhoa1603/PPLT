@@ -9,7 +9,7 @@ int main()
         scanf("%d", &n);
         if (n % 10000 != 0)
         {
-            printf("So tien phai chia het cho 10000. Moi nhap lai: ");
+            printf("So tien phai chia het cho 10000đ. Moi nhap lai: ");
             scanf("%d", &n);
         }
     } while (n % 10000 != 0);
@@ -45,7 +45,7 @@ int main()
         }
     } while (n > 0);
 
-    printf("Doi: %d to 500000, %d to 100000, %d to 50000, %d to 20000, %d to 10000", t500, t100, t50, t20, t10);
+    printf("Doi: %d to 500000đ, %d to 100000đ, %d to 50000đ, %d to 20000đ, %d to 10000đ", t500, t100, t50, t20, t10);
 
     return 0;
 }

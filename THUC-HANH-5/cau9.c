@@ -37,8 +37,6 @@ int main()
     case 9:
         printf("\nHang: Bach Kim");
         break;
-    default:
-        break;
     }
     printf("\n\n");
 
