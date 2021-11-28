@@ -121,7 +121,7 @@ int main()
             scanf("%d", &m);
             if (m * 5000 <= n)
             {
-                du = n % (m * 5000);
+                du = n - (m * 5000);
                 n /= (m * 5000);
                 printf("\nNuoc suoi - %d chai - Tien du: %d", m, du);
             }
