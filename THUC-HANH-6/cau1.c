@@ -9,11 +9,12 @@ int main()
     printf("Nhap chuoi: ");
     gets(name);
 
-    int n = strlen(name);
     int count = 0;
-    for(int i = 0; i < n; i++)
+    int i = 0;
+    while(name[i] != '\0')
     {
         count++;
+        i++;
     }
 
     printf("Do dai cua chuoi la %d", count);
