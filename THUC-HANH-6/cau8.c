@@ -27,10 +27,30 @@ int findWord(char s1[], char s2[])
 int main()
 {
     char s1[] = "thay Manh dep trai";
-    char s2[] = "Manh";
-    printf("s1 = %s\n", s1);
+    printf("Chuoi: %s\n", s1);
+
+    char s2[100];
+    printf("\nNhap tu can tim (khong co dau cach): ");
+    int count;
+    do
+    {
+        count = 0;
+        fgets(s2, 100, stdin);
+        for(int i = 0; i < strlen(s2); i++)
+        {
+            if(s2[i] == ' ')
+            {
+                count++;
+            }
+        }
+        if(count != 0)
+        {
+            printf("Nhap sai, yeu cau nhap lai tu khoa khong co dau cach!\n");
+            printf("\nNhap tu can tim (khong co dau cach): ");
+        }
+    }while(count != 0);
     int kq = findWord(s1, s2);
-    printf("%d", kq);
+    printf("\nVi tri xuat hien: %d", kq);
 
     return 0;
 }
