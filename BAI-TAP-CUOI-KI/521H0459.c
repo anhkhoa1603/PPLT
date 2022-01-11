@@ -6,6 +6,25 @@
 #define max 100
 
 
+typedef struct
+{
+    char id[max];
+    char f_name[max];
+    char l_name[max];
+    char gender[max];
+    char DoB[max];
+    char class[max];
+    char country[max];
+    float score;
+}list;
+typedef struct
+{
+    char id[max];
+    char sub_id[max];
+    char score[max];
+}score;
+
+
 int countf(const char file[])
 {
     FILE* f = fopen(file, "r");
@@ -18,6 +37,27 @@ int countf(const char file[])
     }
     fclose(f);
     return n;
+}
+float average_score(score sc[], int n, char id_sv[])
+{
+    float sum = 0;
+    int count_sub = 0;
+    float score_sv;
+    char temp[max];
+
+    for(int i = 0; i < n; i++)
+    {
+        strcpy(temp, sc[i].score);
+        score_sv = atof(temp);
+        if(strcmp(id_sv, sc[i].id) == 0)
+        {
+            sum += (score_sv + 0.0);
+            count_sub++;
+        }
+    }
+
+    float average = sum / (count_sub * 1.0);
+    return average;
 }
 
 
@@ -58,24 +98,6 @@ void is_error_command(char* input)
         error();
     }
 }
-
-typedef struct
-{
-    char id[max];
-    char f_name[max];
-    char l_name[max];
-    char gender[max];
-    char DoB[max];
-    char class[max];
-    char country[max];
-    float score;
-}list;
-typedef struct
-{
-    char id[max];
-    char sub_id[max];
-    char score[max];
-}score;
 
 
 void read_list(const char dssv[], list sv[])
@@ -148,48 +170,40 @@ void read_list(const char dssv[], list sv[])
 
     fclose(f);
 }
-void read_score(const char diemSo[], score diem[])
+void read_score(const char diemSo[], score sc[])
 {
     FILE* f = fopen(diemSo, "r");
 
-    int n = -1;
+    int n = 0;
     char line[100];
-    while(fgets(line, 100, f))
+    fgets(line, 100, f);
+    while(!feof(f))
     {
+        fgets(line, 100, f);
         int i = 1;
+
+        if(line[strlen(line) - 1] == 10 || line[strlen(line) - 1] == 13)
+            line[strlen(line) - 1] = '\0';
+
+        if(line[strlen(line) - 1] == 10 || line[strlen(line) - 1] == 13)
+            line[strlen(line) - 1] = '\0';  
+
         char* tok = strtok(line, ",");
-
-        if(line[strlen(line) - 1] == 10 || line[strlen(line) - 1] == 13)
-            line[strlen(line) - 1] = '\0';
-
-        if(line[strlen(line) - 1] == 10 || line[strlen(line) - 1] == 13)
-            line[strlen(line) - 1] = '\0';
-
-        int num = atoi(tok);
-        if(num == 0)
-        {
-            fgets(line, 100, f);
-            n++;
-            continue;
-        }
-
         while(tok != NULL)
         {
             if(i == 1)
             {
-                strcpy(diem[n].id, tok);
-                break;
+                strcpy(sc[n].id, tok);
             }
             else if( i == 2)
             {
-                strcpy(diem[n].sub_id, tok);
-                break;
+                strcpy(sc[n].sub_id, tok);
             }
             else if( i == 3)
             {
-                strcpy(diem[n].score, tok);
-                break;
+                strcpy(sc[n].score, tok);
             }
+
             tok = strtok(NULL, ",");
             i++;
         }
@@ -265,6 +279,14 @@ void count_command(list sv[], char* input)
 }
 void top_command(list sv[], score sc[], char* input)
 {
+    int n = countf("dssv.csv");
+    int k = countf("diem.csv");
+
+    for(int i = 0; i < n; i++)
+    {
+        sv[i].score = average_score(sc, k, sv[i].id);
+    }
+
 
 }
 void country_command(list sv[], char* input)
@@ -341,6 +363,7 @@ void read_commend(char* input)
     {
         list sv[max_array];
         read_list("dssv.csv", sv);
+        score sc[max_array];
         read_score("diem.csv", sc);
         
         top_command(sv, sc, input);
