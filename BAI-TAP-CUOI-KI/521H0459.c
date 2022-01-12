@@ -279,6 +279,16 @@ void count_command(list sv[], char* input)
 }
 void top_command(list sv[], score sc[], char* input)
 {
+    char temp[20], temp_[20];
+    strcpy(temp, input);
+    
+    char* tok = strtok(temp, " ");
+    tok = strtok(NULL, " ");
+
+    FILE* f_result = fopen("result.csv", "w");
+
+    int c = atoi(tok);
+
     int n = countf("dssv.csv");
     int k = countf("diem.csv");
 
@@ -287,7 +297,68 @@ void top_command(list sv[], score sc[], char* input)
         sv[i].score = average_score(sc, k, sv[i].id);
     }
 
+    list index;
 
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = i + 1; j < n; j++)
+        {
+            if(sv[i].score == sv[j].score)
+            {
+                if(strcmp(sv[i].f_name, sv[j].f_name) == 0)
+                {
+                    if(strcmp(sv[i].l_name, sv[j].l_name) == 0)
+                    {
+                        if(strcmp(sv[i].country, sv[j].country) == 0)
+                        {
+                            continue;
+                        }
+                        else if(strcmp(sv[i].country, sv[j].country) == -1)
+                        {
+                            index = sv[i];
+                            sv[i] = sv[j];
+                            sv[j] = index;
+                        }
+                    }
+                    else if(strcmp(sv[i].l_name, sv[j].l_name) == -1)
+                    {
+                        index = sv[i];
+                        sv[i] = sv[j];
+                        sv[j] = index;
+                    }
+                }
+                else if(strcmp(sv[i].f_name, sv[j].f_name) == -1)
+                {
+                    index = sv[i];
+                    sv[i] = sv[j];
+                    sv[j] = index;
+                }
+            }
+            else if(sv[i].score < sv[j].score)
+            {
+                index = sv[i];
+                sv[i] = sv[j];
+                sv[j] = index;
+            }
+        }
+    }
+
+    for(int i = 0; i < c; i++)
+    {
+        if(i < c - 1)
+        {
+            fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s,%.2f\n",
+            sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country, sv[i].score);
+        }
+        else
+        {
+            fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s,%.2f",
+            sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country, sv[i].score);
+            break;
+        }
+    }
+
+    fclose(f_result);
 }
 void country_command(list sv[], char* input)
 {
