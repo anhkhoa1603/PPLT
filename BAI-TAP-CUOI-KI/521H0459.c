@@ -59,6 +59,68 @@ float average_score(score sc[], int n, char id_sv[])
     float average = sum / (count_sub * 1.0);
     return average;
 }
+int check_DoB(const char* x,const char* y)
+{
+    char DoBx[100],DoBy[100],day[10],month[10],year[10];
+    int day_x, month_x, year_x, day_y, month_y, year_y;
+
+    strcpy(DoBx,x);
+    strcpy(DoBy,y);
+
+    char* dayx = strtok(DoBx,"/");
+    strcpy(day,dayx);
+    day_x = atoi(day);
+    
+    char* monthx = strtok(NULL,"/");
+    strcpy(month,monthx);
+    month_x = atoi(month);
+
+    char* yearx = strtok(NULL,"/");
+    strcpy(year,yearx);
+    year_x = atoi(year);
+
+    char* dayy = strtok(DoBy,"/");
+    strcpy(day,dayy);
+    day_y = atoi(day);
+
+    char* monthy = strtok(NULL,"/");
+    strcpy(month,monthy);
+    month_y = atoi(month);
+
+    char* yeary = strtok(NULL,"/");
+    strcpy(year,yeary);
+    year_y= atoi(year);
+
+    if (year_x > year_y) return -1;
+
+    if (year_x < year_y) return 1;
+
+    if (year_x == year_y)
+    {
+        if (year_x == year_y && month_x >= month_y)
+        {
+            if (month_x == month_y && day_x >= day_y)
+            {
+                if (day_x == day_y)
+                {
+                    return 0;
+                }
+                return -1;
+            }
+            else if(month_x == month_y)
+            {
+                return 1;
+            }
+            else return -1;
+        }
+        else if(year_x == year_y)
+        {
+            return 1;
+        }
+        return -1;
+    }
+    
+}
 
 
 void error()
@@ -77,8 +139,9 @@ void is_error_command(char* input)
 
     if(input[strlen(input) - 1] == 10 || input[strlen(input) - 1] == 13)
         input[strlen(input) - 1] = '\0';
-
     int n = strlen(input);
+
+
     int count_space = 0;
     for(int i = 0; i < n; i++)
     {
@@ -87,13 +150,31 @@ void is_error_command(char* input)
             count_space++;
         }
     }
-    int dk1 = 1;
+    if(input[n - 1] == ' ')
+    {
+        error();
+    }
     if(count_space != 1)
     {
-        dk1 = 0;
+        error();
     }
 
-    if(!dk1)
+
+    if(input[0] == ' ')
+    {
+        error();
+    }
+
+
+    int count_special = 0;
+    for(int i = 0; i < n; i++)
+    {
+        if(!isalnum(input[i]) && input[i] != ' ')
+        {
+            count_special++;
+        }
+    }
+    if(count_special != 0)
     {
         error();
     }
@@ -253,13 +334,22 @@ void list_command(list sv[], char* input)
 }
 void count_command(list sv[], char* input)
 {
-    char temp[20], temp_[20];
+    char temp[20], temp_[20], test[20];
     strcpy(temp, input);
     
     char* tok = strtok(temp, " ");
-    tok = strtok(NULL, " ");
+    char* tok2 = strtok(NULL, " ");
 
-    strcpy(temp_, tok);
+    strcpy(test, tok2);
+    if(strcmp(test, "female") != 0)
+    {
+        if(strcmp(test, "male") != 0)
+        {
+            error();
+        }
+    }
+
+    strcpy(temp_, tok2);
     temp_[0] = toupper(temp_[0]);
 
     int n = countf("dssv.csv");
@@ -273,6 +363,7 @@ void count_command(list sv[], char* input)
             count++;
         }
     }
+    
     fprintf(f_result, "%d", count);
 
     fclose(f_result);
@@ -284,6 +375,20 @@ void top_command(list sv[], score sc[], char* input)
     
     char* tok = strtok(temp, " ");
     tok = strtok(NULL, " ");
+
+    int count = 0;
+    strcpy(temp_, tok);
+    for(int i = 0; i < strlen(temp_); i++)
+    {
+        if(temp_[i] < '0' || temp_[i] > '9')
+        {
+            count++;
+        }
+    }
+    if(count != 0)
+    {
+        error();
+    }
 
     FILE* f_result = fopen("result.csv", "w");
 
@@ -313,21 +418,21 @@ void top_command(list sv[], score sc[], char* input)
                         {
                             continue;
                         }
-                        else if(strcmp(sv[i].country, sv[j].country) == -1)
+                        else if(strcmp(sv[i].country, sv[j].country) > 0)
                         {
                             index = sv[i];
                             sv[i] = sv[j];
                             sv[j] = index;
                         }
                     }
-                    else if(strcmp(sv[i].l_name, sv[j].l_name) == -1)
+                    else if(strcmp(sv[i].l_name, sv[j].l_name) > 0)
                     {
                         index = sv[i];
                         sv[i] = sv[j];
                         sv[j] = index;
                     }
                 }
-                else if(strcmp(sv[i].f_name, sv[j].f_name) == -1)
+                else if(strcmp(sv[i].f_name, sv[j].f_name) > 0)
                 {
                     index = sv[i];
                     sv[i] = sv[j];
@@ -347,17 +452,117 @@ void top_command(list sv[], score sc[], char* input)
     {
         if(i < c - 1)
         {
-            fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s,%.2f\n",
-            sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country, sv[i].score);
+            fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s\n",
+            sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
         }
         else
         {
-            fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s,%.2f",
-            sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country, sv[i].score);
+            fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s",
+            sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
             break;
         }
     }
 
+    fclose(f_result);
+}
+void sort_command(list sv[], char* input)
+{
+    char temp[20], temp_[20];
+    strcpy(temp, input);
+    
+    char* tok = strtok(temp, " ");
+    char* tok2= strtok(NULL, " ");
+    strcpy(temp_, tok2);
+
+    int n = countf("dssv.csv");
+    FILE* f_result = fopen("result.csv", "w");
+
+    list index;
+
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = i + 1; j < n; j++)
+        {
+            if(strcmp(sv[i].f_name, sv[j].f_name) == 0)
+            {
+                if(check_DoB(sv[i].DoB, sv[j].DoB) == 0)
+                {
+                    if(strcmp(sv[i].l_name, sv[j].l_name) == 0)
+                    {
+                        if(strcmp(sv[i].country, sv[j].country) == 0)
+                        {
+                            
+                        }
+                        else if(strcmp(sv[i].country, sv[j].country) > 0)
+                        {
+                            index = sv[i];
+                            sv[i] = sv[j];
+                            sv[j] = index;
+                        }
+                    }
+                    else if(strcmp(sv[i].l_name, sv[j].l_name) > 0)
+                    {
+                        index = sv[i];
+                        sv[i] = sv[j];
+                        sv[j] = index;
+                    }
+                }
+                else if(check_DoB(sv[i].DoB, sv[j].DoB) > 0)
+                {
+                    index = sv[i];
+                    sv[i] = sv[j];
+                    sv[j] = index;
+                }
+            }
+            else if(strcmp(sv[i].f_name, sv[j].f_name) > 0)
+            {
+                index = sv[i];
+                sv[i] = sv[j];
+                sv[j] = index;
+            }
+        }
+    }
+
+    if(strcmp(temp_, "asc") == 0)
+    {
+        for(int i = 0; i < n; i++)
+        {
+            if(i != n - 1)
+            {
+                fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s\n",
+                    sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
+            }
+            else
+            {
+                fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s",
+                    sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
+            }
+        }
+    }
+    else if(strcmp(temp_, "desc") == 0)
+    {
+        for(int i = n - 1; i >= 0; i--)
+        {
+            if(i != 0)
+            {
+                fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s\n",
+                    sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
+            }
+            else
+            {
+                fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s",
+                    sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
+            }
+        }
+    }
+    else
+    {
+        error();
+    }
+
+    
+    
+    
     fclose(f_result);
 }
 void country_command(list sv[], char* input)
@@ -395,7 +600,7 @@ void country_command(list sv[], char* input)
         else if(strcmp(sv[i].country, temp_) == 0)
         {
             fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s",
-                sv[nl].id, sv[nl].f_name, sv[nl].l_name, sv[nl].gender, sv[nl].DoB, sv[nl].class, sv[nl].country);
+                sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
         }
     }
     
@@ -441,7 +646,10 @@ void read_commend(char* input)
     }
     else if(strcmp(command, "sort") == 0)
     {
+        list sv[max_array];
+        read_list("dssv.csv", sv);
         
+        sort_command(sv, input);
     }
     else if(strcmp(command, "country") == 0)
     {
@@ -459,6 +667,7 @@ void read_commend(char* input)
 
 int main()
 {
+
     int a = countf("dssv.csv");
     int b = countf("dsmh.csv");
     int c = countf("diem.csv");
