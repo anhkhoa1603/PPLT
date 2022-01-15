@@ -326,7 +326,7 @@ void list_command(list sv[], char* input)
         else if(strcmp(sv[i].class, tok) == 0)
         {
             fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s",
-                sv[nl].id, sv[nl].f_name, sv[nl].l_name, sv[nl].gender, sv[nl].DoB, sv[nl].class, sv[nl].country);
+                sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
         }
     }
     
@@ -448,18 +448,38 @@ void top_command(list sv[], score sc[], char* input)
         }
     }
 
-    for(int i = 0; i < c; i++)
+    if(c > n)
     {
-        if(i < c - 1)
+        for(int i = 0; i < n; i++)
         {
-            fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s\n",
-            sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
+            if(i < n - 1)
+            {
+                fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s\n",
+                sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
+            }
+            else
+            {
+                fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s",
+                sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
+                break;
+            }
         }
-        else
+    }
+    else
+    {
+        for(int i = 0; i < c; i++)
         {
-            fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s",
-            sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
-            break;
+            if(i < c - 1)
+            {
+                fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s\n",
+                sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
+            }
+            else
+            {
+                fprintf(f_result, "%s,%s,%s,%s,%s,%s,%s",
+                sv[i].id, sv[i].f_name, sv[i].l_name, sv[i].gender, sv[i].DoB, sv[i].class, sv[i].country);
+                break;
+            }
         }
     }
 
@@ -473,6 +493,11 @@ void sort_command(list sv[], char* input)
     char* tok = strtok(temp, " ");
     char* tok2= strtok(NULL, " ");
     strcpy(temp_, tok2);
+
+    if(strcmp(temp_, "asc") != 0 && strcmp(temp_, "desc") != 0)
+    {
+        error();
+    }
 
     int n = countf("dssv.csv");
     FILE* f_result = fopen("result.csv", "w");
@@ -555,13 +580,6 @@ void sort_command(list sv[], char* input)
             }
         }
     }
-    else
-    {
-        error();
-    }
-
-    
-    
     
     fclose(f_result);
 }
