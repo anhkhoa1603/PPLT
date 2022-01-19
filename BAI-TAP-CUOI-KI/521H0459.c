@@ -532,7 +532,7 @@ void sort_command(list sv[], char* input)
                         sv[j] = index;
                     }
                 }
-                else if(check_DoB(sv[i].DoB, sv[j].DoB) > 0)
+                else if(check_DoB(sv[i].DoB, sv[j].DoB) < 0)
                 {
                     index = sv[i];
                     sv[i] = sv[j];
