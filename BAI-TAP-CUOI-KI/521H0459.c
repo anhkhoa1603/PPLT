@@ -399,6 +399,7 @@ void top_command(list sv[], score sc[], char* input)
 
     for(int i = 0; i < n; i++)
     {
+        sv[i].score = 0;
         sv[i].score = average_score(sc, k, sv[i].id);
     }
 
